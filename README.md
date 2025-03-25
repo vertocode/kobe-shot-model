@@ -16,3 +16,9 @@ In this project, we will explore two machine learning approaches:
 The project follows the **TDSP (Team Data Science Process)** framework, ensuring a structured approach to data collection, preparation, model training, evaluation, and deployment. The goal is to deliver a robust model that can predict shot outcomes and be easily deployed for future use.
 
 This README will guide you through the steps and processes involved in the project, from data ingestion to model deployment and monitoring.
+
+## Project Flow
+
+Below is the diagram that outlines the steps and processes involved in the **Kobe Shot Model** project, from data ingestion to model deployment and monitoring.
+
+![Project Flow](docs/project_flow.png)
