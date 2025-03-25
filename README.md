@@ -2,8 +2,9 @@
 
 ## Jump To
 
-- [Project Flow](#project-flow)
 - [Setup](/docs/SETUP.md)
+- [Introduction](#introduction)
+- [Project Flow Diagram](#project-flow)
 
 ## Introduction
 

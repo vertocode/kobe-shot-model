@@ -6,6 +6,6 @@ def create_pipeline(**kargs) -> Pipeline:
         node(
             data_loader_node,
             inputs=[],
-            outputs='raw_train'
+            outputs=['dev_raw_train', 'prod_raw_train']
         )
     ])

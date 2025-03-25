@@ -1,3 +1,7 @@
-raw_train:
+dev_raw_train:
   type: pandas.ParquetDataset
   filepath: data/01_raw/dataset_kobe_dev.parquet
+
+prod_raw_train:
+  type: pandas.ParquetDataset
+  filepath: data/01_raw/dataset_kobe_prod.parquet
