@@ -5,7 +5,7 @@ import io
 devFileUrl = 'https://raw.githubusercontent.com/tciodaro/eng_ml/main/data/dataset_kobe_dev.parquet'
 prodFileUrl = 'https://raw.githubusercontent.com/tciodaro/eng_ml/main/data/dataset_kobe_prod.parquet'
 
-def data_loader_node() -> tuple:
+def data_acquisition_node() -> tuple:
     """
     Downloads Parquet datasets dynamically from remote URLs and loads them into pandas DataFrames.
     
@@ -34,5 +34,7 @@ def data_loader_node() -> tuple:
         prod_data = pd.read_parquet(io.BytesIO(prod_response.content))
     else:
         raise Exception(f"Failed to download the production file. Status code: {prod_response.status_code}")
+    
+    dev_data.head(5)
 
     return dev_data, prod_data

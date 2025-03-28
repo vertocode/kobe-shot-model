@@ -1,5 +1,7 @@
 # Kobe Shot Model
 
+Github: https://github.com/vertocode/kobe-shot-model
+
 ## Jump To
 
 - [Setup](/docs/SETUP.md)

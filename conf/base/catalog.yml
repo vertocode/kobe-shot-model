@@ -5,3 +5,35 @@ dev_raw_train:
 prod_raw_train:
   type: pandas.ParquetDataset
   filepath: data/01_raw/dataset_kobe_prod.parquet
+
+prepared_dev_raw_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/dataset_kobe_dev.parquet
+
+prepared_prod_raw_train:
+  type: pandas.ParquetDataset
+  filepath: data/02_intermediate/dataset_kobe_prod.parquet
+
+selected_features_dev_raw_train:
+  type: pandas.ParquetDataset
+  filepath: data/04_feature/dataset_kobe_dev.parquet
+
+selected_features_prod_raw_train:
+  type: pandas.ParquetDataset
+  filepath: data/04_feature/dataset_kobe_prod.parquet
+
+dev_train_data:
+  type: pandas.ParquetDataset
+  filepath: data/05_model_input/train_dataset_kobe_dev.parquet
+
+dev_test_data:
+  type: pandas.ParquetDataset
+  filepath: data/05_model_input/test_dataset_kobe_dev.parquet
+
+prod_train_data:
+  type: pandas.ParquetDataset
+  filepath: data/05_model_input/train_dataset_kobe_prod.parquet
+
+prod_test_data:
+  type: pandas.ParquetDataset
+  filepath: data/05_model_input/test_dataset_kobe_prod.parquet
