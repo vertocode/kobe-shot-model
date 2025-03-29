@@ -7,6 +7,7 @@ Github: https://github.com/vertocode/kobe-shot-model
 - [Setup](/docs/SETUP.md)
 - [Introduction](#introduction)
 - [Project Flow Diagram](#project-flow)
+- [How Do Streamlit, MLFlow, PyCaret, and Scikit-Learn Support the Pipeline?](#how-do-streamlit-mlflow-pycaret-and-scikit-learn-support-the-pipeline)
 
 ## Introduction
 
@@ -25,3 +26,28 @@ This README will guide you through the steps and processes involved in the proje
 Below is the diagram that outlines the steps and processes involved in the **Kobe Shot Model** project, from data ingestion to model deployment and monitoring.
 
 ![Project Flow](docs/project_flow.png)
+
+## How Do Streamlit, MLFlow, PyCaret, and Scikit-Learn Support the Pipeline?
+
+**Q: How do these tools assist in building the machine learning pipeline?**
+
+**A:** Each tool plays a crucial role in different stages of the pipeline:
+
+- **MLflow**:
+  - **Experiment Tracking**: Logs model parameters, metrics, and artifacts to track experiments.
+  - **Model Registry**: Stores different versions of models, facilitating easy comparison and deployment.
+  - **Monitoring**: Helps in evaluating model performance over time.
+
+- **PyCaret**:
+  - **Automated Training**: Simplifies the process of training and comparing multiple models with minimal code.
+  - **Model Evaluation**: Provides built-in tools to assess model performance using various metrics.
+
+- **Scikit-Learn**:
+  - **Feature Engineering & Preprocessing**: Offers robust tools for feature selection, scaling, and transformation.
+  - **Model Training**: Implements various machine learning algorithms, including logistic regression and decision trees.
+
+- **Streamlit**:
+  - **Interactive Dashboard**: Enables visualization of predictions and model insights in a user-friendly web app.
+  - **Deployment**: Facilitates easy deployment of models with an intuitive UI for end users.
+
+By integrating these tools, the pipeline ensures efficient model training, evaluation, deployment, and monitoring.
