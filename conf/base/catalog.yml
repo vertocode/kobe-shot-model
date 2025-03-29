@@ -1,3 +1,4 @@
+# 01_raw
 dev_raw_train:
   type: pandas.ParquetDataset
   filepath: data/01_raw/dataset_kobe_dev.parquet
@@ -6,6 +7,7 @@ prod_raw_train:
   type: pandas.ParquetDataset
   filepath: data/01_raw/dataset_kobe_prod.parquet
 
+# 02_intermediate
 prepared_dev_raw_train:
   type: pandas.ParquetDataset
   filepath: data/02_intermediate/dataset_kobe_dev.parquet
@@ -14,6 +16,9 @@ prepared_prod_raw_train:
   type: pandas.ParquetDataset
   filepath: data/02_intermediate/dataset_kobe_prod.parquet
 
+# 03_primary - it was not necessary for this project
+
+# 04_feature
 selected_features_dev_raw_train:
   type: pandas.ParquetDataset
   filepath: data/04_feature/dataset_kobe_dev.parquet
@@ -22,6 +27,7 @@ selected_features_prod_raw_train:
   type: pandas.ParquetDataset
   filepath: data/04_feature/dataset_kobe_prod.parquet
 
+# 05_model_input
 dev_train_data:
   type: pandas.ParquetDataset
   filepath: data/05_model_input/train_dataset_kobe_dev.parquet
