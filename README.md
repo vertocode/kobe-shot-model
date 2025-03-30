@@ -8,6 +8,7 @@ Github: https://github.com/vertocode/kobe-shot-model
 - [Introduction](#introduction)
 - [Project Flow Diagram](#project-flow)
 - [How Do Streamlit, MLFlow, PyCaret, and Scikit-Learn Support the Pipeline?](#how-do-streamlit-mlflow-pycaret-and-scikit-learn-support-the-pipeline)
+- [Dataset Dimensions](#dataset-dimensions)
 
 ## Introduction
 
@@ -61,3 +62,19 @@ As part of the data preprocessing for the **Kobe Shot Model**, the dataset was f
 This result can be verified in the notebook **dimension_initial_dataset.ipynb** located in the **notebooks** folder. The notebook demonstrates how the filtering process was applied, resulting in a cleaned dataset ready for model training.
 
 You can inspect the details of the dataset and the preprocessing steps by reviewing the notebook.
+
+## Train-Test Split and Bias Mitigation
+
+To ensure robust evaluation of the model's performance, the dataset was randomly split into two subsets: training (80%) and testing (20%). The split was performed using a **stratified** approach to maintain the same distribution of the target variable (shot success/failure) across both datasets. The resulting datasets are stored in the following paths:
+
+- **Training dataset**: `/data/05_model_input/train_dataset_kobe_dev.parquet`
+- **Testing dataset**: `/data/05_model_input/test_dataset_kobe_dev.parquet`
+
+This random and stratified split ensures that the model is trained on a representative sample of the data and tested on a different subset to evaluate generalization performance. The dataset split is performed within a node used in the pipeline, which can be observed in the file [data_splitting.py](https://github.com/vertocode/kobe-shot-model/blob/main/src/kedro_ml/pipelines/shot_model/nodes/data_splitting.py).
+
+The choice of training and testing data directly impacts the model's performance and evaluation. If the training data is not representative of the population, or if there is a significant discrepancy between the training and test sets, the model may not generalize well to new, unseen data. This can lead to overfitting or underfitting, affecting the model's real-world applicability.
+
+To minimize data bias and improve the model's reliability:
+- **Cross-validation**: Instead of using a single train-test split, cross-validation involves multiple splits of the data to ensure the model's performance is consistent across different subsets of the data.
+- **Feature selection**: Choosing the most relevant features helps reduce noise in the model and prevents overfitting, improving its ability to generalize.
+- **Handling imbalanced data**: If the dataset contains imbalanced classes (e.g., significantly more shots missed than made), techniques such as oversampling, undersampling, or using class weights in model training can help ensure fair performance across classes.
