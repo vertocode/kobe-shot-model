@@ -43,3 +43,31 @@ prod_train_data:
 prod_test_data:
   type: pandas.ParquetDataset
   filepath: data/05_model_input/test_dataset_kobe_prod.parquet
+
+# 06_models
+
+lr_model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/lr_model.pickle
+
+dt_model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/dt_model.pickle
+
+
+
+# 07_model_output
+
+# 08_reporting
+
+# lr_model:
+#   type: kedro_mlflow.io.models.MlflowModelTrackingDataset
+#   flavor: mlflow.sklearn
+#   save_args:
+#     registered_model_name: titanic_lr_model
+
+# best_model:
+#   type: kedro_mlflow.io.models.MlflowModelTrackingDataset
+#   flavor: mlflow.sklearn
+#   save_args:
+#     registered_model_name: titanic_best_model

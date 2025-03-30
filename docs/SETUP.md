@@ -31,7 +31,15 @@ pyenv activate shotmodel
 pip install -r requirements.txt
 ```
 
-2. Run kedro
+2. Run MLFlow
+
+```shell
+mlflow server
+```
+
+3. Run kedro
+
+Open another terminal, enter in the same virtual environment, and run the following command:
 
 ```shell
 python -m kedro run
