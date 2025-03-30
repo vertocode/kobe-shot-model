@@ -9,6 +9,7 @@ Github: https://github.com/vertocode/kobe-shot-model
 - [Project Flow Diagram](#project-flow)
 - [How Do Streamlit, MLFlow, PyCaret, and Scikit-Learn Support the Pipeline?](#how-do-streamlit-mlflow-pycaret-and-scikit-learn-support-the-pipeline)
 - [Dataset Dimensions](#dataset-dimensions)
+- [Train-Test Split and Bias Mitigation](#train-test-split-and-bias-mitigation)
 
 ## Introduction
 
@@ -59,7 +60,7 @@ As part of the data preprocessing for the **Kobe Shot Model**, the dataset was f
 
 - **Filtered dataset dimensions**: (20285, 7)
 
-This result can be verified in the notebook **dimension_initial_dataset.ipynb** located in the **notebooks** folder. The notebook demonstrates how the filtering process was applied, resulting in a cleaned dataset ready for model training.
+This result can be verified in the notebook [dimension_initial_dataset.ipynb](https://github.com/vertocode/kobe-shot-model/blob/main/notebooks/dimension_initial_dataset.ipynb) located in the [notebooks folder](https://github.com/vertocode/kobe-shot-model/tree/main/notebooks). The notebook demonstrates how the filtering process was applied, resulting in a cleaned dataset ready for model training.
 
 You can inspect the details of the dataset and the preprocessing steps by reviewing the notebook.
 
