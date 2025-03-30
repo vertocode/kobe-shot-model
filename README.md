@@ -25,7 +25,7 @@ This README will guide you through the steps and processes involved in the proje
 
 Below is the diagram that outlines the steps and processes involved in the **Kobe Shot Model** project, from data ingestion to model deployment and monitoring.
 
-![Project Flow](docs/project_flow.png)
+![Project Flow](docs/images/project_flow.png)
 
 ## How Do Streamlit, MLFlow, PyCaret, and Scikit-Learn Support the Pipeline?
 
@@ -51,3 +51,13 @@ Below is the diagram that outlines the steps and processes involved in the **Kob
   - **Deployment**: Facilitates easy deployment of models with an intuitive UI for end users.
 
 By integrating these tools, the pipeline ensures efficient model training, evaluation, deployment, and monitoring.
+
+## Dataset Dimensions
+
+As part of the data preprocessing for the **Kobe Shot Model**, the dataset was filtered to include only relevant columns, and rows with missing data were removed. The resulting dataset has the following dimensions:
+
+- **Filtered dataset dimensions**: (20285, 7)
+
+This result can be verified in the notebook **dimension_initial_dataset.ipynb** located in the **notebooks** folder. The notebook demonstrates how the filtering process was applied, resulting in a cleaned dataset ready for model training.
+
+You can inspect the details of the dataset and the preprocessing steps by reviewing the notebook.
