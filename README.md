@@ -10,6 +10,7 @@ Github: https://github.com/vertocode/kobe-shot-model
 - [How Do Streamlit, MLFlow, PyCaret, and Scikit-Learn Support the Pipeline?](#how-do-streamlit-mlflow-pycaret-and-scikit-learn-support-the-pipeline)
 - [Dataset Dimensions](#dataset-dimensions)
 - [Train-Test Split and Bias Mitigation](#train-test-split-and-bias-mitigation)
+- [Choosing Between Logistic Regression and Decision Tree Models](#choosing-between-logistic-regression-and-decision-tree-models)
 
 ## Introduction
 
@@ -79,3 +80,21 @@ To minimize data bias and improve the model's reliability:
 - **Cross-validation**: Instead of using a single train-test split, cross-validation involves multiple splits of the data to ensure the model's performance is consistent across different subsets of the data.
 - **Feature selection**: Choosing the most relevant features helps reduce noise in the model and prevents overfitting, improving its ability to generalize.
 - **Handling imbalanced data**: If the dataset contains imbalanced classes (e.g., significantly more shots missed than made), techniques such as oversampling, undersampling, or using class weights in model training can help ensure fair performance across classes.
+
+## Choosing Between Logistic Regression and Decision Tree Models
+
+In this project, we trained two different models: one using **Logistic Regression** and another using a **Decision Tree**. To select the most suitable model, we compared their performance metrics.
+
+As detailed in [this notebook](./notebooks/lg_regression_decision_three.ipynb), the **Decision Tree model** consistently outperformed the Logistic Regression model across all key metrics.
+
+### Logistic Regression
+
+![img.png](docs/images/lr_results.png)
+
+### Decision Tree
+
+![img.png](docs/images/dt_results.png)
+
+### Conclusion
+
+Based on the results shown above, the Decision Tree model achieved superior performance across all evaluation metrics. Therefore, we selected the Decision Tree model as the final model for this project.
