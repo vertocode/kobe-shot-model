@@ -76,5 +76,16 @@ best_model:
   save_args:
     registered_model_name: best_model
 
+lr_model_metrics_img:
+  type: text.TextDataset
+  filepath: data/07_model_outputs/lr_model_metrics.txt
+
+dt_model_metrics_img:
+  type: text.TextDataset
+  filepath: data/07_model_outputs/dt_model_metrics.txt
+
 # 08_reporting
 
+best_model_report:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/best_model_report.csv

@@ -5,6 +5,7 @@ from .nodes.data_feature import data_feature_preparation
 from .nodes.data_splitting import data_splitting
 from .nodes.models import model_logistic_regression, model_decision_tree
 from .nodes.best_model import best_model_node
+from .nodes.plots import generate_model_report
 
 def create_pipeline(**kargs) -> Pipeline:
     return pipeline([
@@ -57,7 +58,13 @@ def create_pipeline(**kargs) -> Pipeline:
                 'dt_model',
                 'params:session_id'
             ],
-            outputs='best_model',
+            outputs=['best_model', 'lr_model_metrics_img', 'dt_model_metrics_img'],
             tags=['best_model', 'model']
+        ),
+        node(
+            generate_model_report,
+            inputs=['best_model', 'dev_test_data', 'params:session_id'],
+            outputs='best_model_report',
+            tags=['reporting']
         )
     ])
