@@ -1,6 +1,12 @@
 ## Setup
 
-0. Set up the virtual environment (Optional, but recommended)
+1. Clone this repository
+
+```shell
+git clone git@github.com:vertocode/kobe-shot-model.git
+```
+
+2. Set up the virtual environment
 
 First, let’s create a virtual environment. I will use pyenv, but feel free to use any other tool you prefer.
 
@@ -25,19 +31,19 @@ pyenv activate shotmodel
 > Note: The command may vary depending on the name you chose for your virtual environment.
 
 
-1. Install dependencies
+3. Install dependencies
 
 ```shell
 pip install -r requirements.txt
 ```
 
-2. Run MLFlow
+4. Run MLFlow
 
 ```shell
 mlflow server
 ```
 
-3. Run kedro
+5. Run kedro
 
 Open another terminal, enter in the same virtual environment, and run the following command:
 

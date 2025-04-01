@@ -46,28 +46,35 @@ prod_test_data:
 
 # 06_models
 
+# store the model locally
+#lr_model:
+#  type: pickle.PickleDataset
+#  filepath: data/06_models/lr_model.pickle
+#
+#dt_model:
+#  type: pickle.PickleDataset
+#  filepath: data/06_models/dt_model.pickle
+
+# register in the mlflow
 lr_model:
-  type: pickle.PickleDataset
-  filepath: data/06_models/lr_model.pickle
+ type: kedro_mlflow.io.models.MlflowModelTrackingDataset
+ flavor: mlflow.sklearn
+ save_args:
+   registered_model_name: lr_model
 
 dt_model:
-  type: pickle.PickleDataset
-  filepath: data/06_models/dt_model.pickle
-
-
+ type: kedro_mlflow.io.models.MlflowModelTrackingDataset
+ flavor: mlflow.sklearn
+ save_args:
+   registered_model_name: dt_model
 
 # 07_model_output
 
+best_model:
+  type: kedro_mlflow.io.models.MlflowModelTrackingDataset
+  flavor: mlflow.sklearn
+  save_args:
+    registered_model_name: best_model
+
 # 08_reporting
 
-# lr_model:
-#   type: kedro_mlflow.io.models.MlflowModelTrackingDataset
-#   flavor: mlflow.sklearn
-#   save_args:
-#     registered_model_name: titanic_lr_model
-
-# best_model:
-#   type: kedro_mlflow.io.models.MlflowModelTrackingDataset
-#   flavor: mlflow.sklearn
-#   save_args:
-#     registered_model_name: titanic_best_model

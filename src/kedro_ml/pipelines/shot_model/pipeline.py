@@ -4,6 +4,7 @@ from .nodes.data_preparation import data_preparation_node
 from .nodes.data_feature import data_feature_preparation
 from .nodes.data_splitting import data_splitting
 from .nodes.models import model_logistic_regression, model_decision_tree
+from .nodes.best_model import best_model_node
 
 def create_pipeline(**kargs) -> Pipeline:
     return pipeline([
@@ -47,5 +48,16 @@ def create_pipeline(**kargs) -> Pipeline:
             inputs=['dev_train_data', 'params:session_id'],
             outputs=['dt_model'],
             tags=['training', 'model']
+        ),
+        node(
+            best_model_node,
+            inputs=[
+                'dev_test_data',
+                'lr_model',
+                'dt_model',
+                'params:session_id'
+            ],
+            outputs='best_model',
+            tags=['best_model', 'model']
         )
     ])
