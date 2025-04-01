@@ -11,6 +11,7 @@ Github: https://github.com/vertocode/kobe-shot-model
 - [Dataset Dimensions](#dataset-dimensions)
 - [Train-Test Split and Bias Mitigation](#train-test-split-and-bias-mitigation)
 - [Choosing Between Logistic Regression and Decision Tree Models](#choosing-between-logistic-regression-and-decision-tree-models)
+- [Project Artifacts](#project-artifacts)
 
 ## Introduction
 
@@ -95,6 +96,34 @@ As detailed in [this notebook](./notebooks/lg_regression_decision_three.ipynb), 
 
 ![img.png](docs/images/dt_results.png)
 
-### Conclusion
+### Best model
 
 Based on the results shown above, the Decision Tree model achieved superior performance across all evaluation metrics. Therefore, we selected the Decision Tree model as the final model for this project.
+
+## Project Artifacts
+
+Throughout the execution of the **Kobe Shot Model** pipeline, several artifacts are created and stored at different stages. Below is a description of each artifact as defined in the `catalog.yml`.
+
+#### 01_raw
+- **dev_raw_train** and **prod_raw_train**: Raw datasets in `.parquet` format containing the original inputs for training and validation.
+
+#### 02_intermediate
+- **prepared_dev_raw_train** and **prepared_prod_raw_train**: Cleaned and preprocessed datasets after initial preparation steps such as filtering and missing value handling.
+
+#### 04_feature
+- **selected_features_dev_raw_train** and **selected_features_prod_raw_train**: Datasets with selected features after feature engineering, ready to be split for training and testing.
+
+#### 05_model_input
+- **dev_train_data**, **prod_train_data**, **dev_test_data**, **prod_test_data**: Train/test splits prepared for both development and production pipelines.
+
+#### 06_models
+- **lr_model** and **dt_model**: Trained logistic regression and decision tree models, stored and versioned using MLflow.
+
+#### 07_model_output
+- **best_model**: The selected model based on evaluation metrics.
+- **lr_model_metrics_img** and **dt_model_metrics_img**: Visual evaluation reports (HTML with embedded base64 PNG images) of both models.
+
+#### 08_reporting
+- **best_model_report**: CSV file containing classification metrics (Accuracy, F1 Score, Log Loss, Precision, Recall) for the best model selected.
+
+All artifacts are stored under the `/data` directory, organized by pipeline stage to ensure traceability and reproducibility.
