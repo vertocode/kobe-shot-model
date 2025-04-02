@@ -22,14 +22,6 @@ def generate_model_report(best_model, dev_test_data: pd.DataFrame, session_id: i
     pd.DataFrame
         A one-row DataFrame with various classification metrics.
     """
-    setup(
-        data=dev_test_data,
-        target=target_column,
-        session_id=session_id,
-        html=False,
-        verbose=False,
-    )
-
     predictions = predict_model(best_model, data=dev_test_data)
     y_true = dev_test_data[target_column]
     y_pred = predictions["prediction_label"]

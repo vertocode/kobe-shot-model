@@ -24,7 +24,9 @@ def model_logistic_regression(train_set: pd.DataFrame, session_id: int):
 
     tuned_model = exp.tune_model(model, n_iter=10, optimize='AUC')
 
-    return [tuned_model]
+    final_pipeline = exp.finalize_model(tuned_model)
+
+    return [final_pipeline]
     
     
 def model_decision_tree(train_set: pd.DataFrame, session_id: int):
@@ -48,4 +50,6 @@ def model_decision_tree(train_set: pd.DataFrame, session_id: int):
 
     tuned_model = exp.tune_model(model, n_iter=10, optimize='AUC')
 
-    return [tuned_model]
+    final_pipeline = exp.finalize_model(tuned_model)
+
+    return [final_pipeline]

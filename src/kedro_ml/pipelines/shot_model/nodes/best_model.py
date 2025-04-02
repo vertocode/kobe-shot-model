@@ -1,6 +1,7 @@
 import pandas as pd
 from pycaret.classification import setup, predict_model
 from sklearn.metrics import log_loss, f1_score
+import mlflow
 
 target_column = 'shot_made_flag'
 
@@ -30,14 +31,6 @@ def best_model_node(test_set: pd.DataFrame, lr_model, dt_model, session_id: int)
     dt_model_metrics_img : bytes
       PNG image with metrics for decision tree.
     """
-    setup(
-        data=test_set,
-        target=target_column,
-        session_id=session_id,
-        html=False,
-        verbose=False,
-    )
-
     lr_pred = predict_model(lr_model, data=test_set)
     dt_pred = predict_model(dt_model, data=test_set)
 
@@ -48,11 +41,24 @@ def best_model_node(test_set: pd.DataFrame, lr_model, dt_model, session_id: int)
     dt_f1 = f1_score(y_true, dt_pred["prediction_label"])
 
     if lr_log_loss < dt_log_loss:
-        best_model = lr_model
         print(f"Selected Logistic Regression: log_loss={lr_log_loss:.4f}, f1={lr_f1:.4f}")
+        best_model = lr_model
+        best_log_loss = lr_log_loss
+        best_f1 = lr_f1
     else:
-        best_model = dt_model
         print(f"Selected Decision Tree: log_loss={dt_log_loss:.4f}, f1={dt_f1:.4f}")
+        best_model = dt_model
+        best_log_loss = dt_log_loss
+        best_f1 = dt_f1
+
+    active_run = mlflow.active_run()
+    if active_run is not None:
+        mlflow.log_metric("log_loss_lr", lr_log_loss)
+        mlflow.log_metric("f1_score_lr", lr_f1)
+        mlflow.log_metric("log_loss_dt", dt_log_loss)
+        mlflow.log_metric("f1_score_dt", dt_f1)
+        mlflow.log_metric("log_loss_best", best_log_loss)
+        mlflow.log_metric("f1_score_best", best_f1)
 
     lr_model_metrics_img = generate_metrics("Logistic Regression Metrics", lr_log_loss, lr_f1)
     dt_model_metrics_img = generate_metrics("Decision Tree Metrics", dt_log_loss, dt_f1)
