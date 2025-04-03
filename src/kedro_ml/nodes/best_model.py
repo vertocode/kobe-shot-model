@@ -1,11 +1,11 @@
 import pandas as pd
-from pycaret.classification import setup, predict_model
+from pycaret.classification import predict_model
 from sklearn.metrics import log_loss, f1_score
 import mlflow
 
 target_column = 'shot_made_flag'
 
-def best_model_node(test_set: pd.DataFrame, lr_model, dt_model, session_id: int):
+def best_model_node(test_set: pd.DataFrame, lr_model, dt_model):
     """
     Compares two classification models (logistic regression and decision tree) on a test set
     using log loss and F1-score, and returns the best model based on log loss.

@@ -1,6 +1,6 @@
-from .pipelines.shot_model import create_pipeline
+from .pipelines import get_pipelines
 
 def register_pipelines():
     return {
-        "__default__": create_pipeline(),
+        "__default__": get_pipelines(),
     }

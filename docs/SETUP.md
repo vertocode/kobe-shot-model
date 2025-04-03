@@ -10,7 +10,6 @@ git clone git@github.com:vertocode/kobe-shot-model.git
 
 First, let’s create a virtual environment. I will use pyenv, but feel free to use any other tool you prefer.
 
-- macOS/Linux:
 ```shell
 pyenv virtualenv 3.11.6 shotmodel
 ```
@@ -23,12 +22,24 @@ Make sure you have created the environment using Python 3.11.6.
 
 Now, activate the newly created virtual environment by running the following command:
 
-- macOS/Linux:
 ```shell
 pyenv activate shotmodel
 ```
 
 > Note: The command may vary depending on the name you chose for your virtual environment.
+
+> Note 2: If you receive the error: 
+> 
+> Failed to activate virtualenv.
+> 
+> Perhaps pyenv-virtualenv has not been loaded into your shell properly.
+> Please restart current shell and try again.
+> 
+> You can resolve running the commands below:
+> ```shell
+> eval "$(pyenv init --path)"
+> eval "$(pyenv init -)" && pyenv rehash
+> ```
 
 
 3. Install dependencies
