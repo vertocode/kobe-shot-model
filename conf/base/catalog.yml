@@ -56,13 +56,25 @@ prod_test_data:
 #  filepath: data/06_models/dt_model.pickle
 
 # register in the mlflow
-lr_model:
+dev_lr_model:
  type: kedro_mlflow.io.models.MlflowModelTrackingDataset
  flavor: mlflow.sklearn
  save_args:
    registered_model_name: lr_model
 
-dt_model:
+dev_dt_model:
+ type: kedro_mlflow.io.models.MlflowModelTrackingDataset
+ flavor: mlflow.sklearn
+ save_args:
+   registered_model_name: dt_model
+
+prod_lr_model:
+ type: kedro_mlflow.io.models.MlflowModelTrackingDataset
+ flavor: mlflow.sklearn
+ save_args:
+   registered_model_name: lr_model
+
+prod_dt_model:
  type: kedro_mlflow.io.models.MlflowModelTrackingDataset
  flavor: mlflow.sklearn
  save_args:
@@ -70,22 +82,40 @@ dt_model:
 
 # 07_model_output
 
-best_model:
+dev_best_model:
   type: kedro_mlflow.io.models.MlflowModelTrackingDataset
   flavor: mlflow.sklearn
   save_args:
     registered_model_name: best_model
 
-lr_model_metrics_img:
+dev_lr_model_metrics_img:
   type: text.TextDataset
   filepath: data/07_model_outputs/lr_model_metrics.txt
 
-dt_model_metrics_img:
+dev_dt_model_metrics_img:
+  type: text.TextDataset
+  filepath: data/07_model_outputs/dt_model_metrics.txt
+
+prod_best_model:
+  type: kedro_mlflow.io.models.MlflowModelTrackingDataset
+  flavor: mlflow.sklearn
+  save_args:
+    registered_model_name: best_model
+
+prod_lr_model_metrics_img:
+  type: text.TextDataset
+  filepath: data/07_model_outputs/lr_model_metrics.txt
+
+prod_dt_model_metrics_img:
   type: text.TextDataset
   filepath: data/07_model_outputs/dt_model_metrics.txt
 
 # 08_reporting
 
-best_model_report:
+dev_best_model_report:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/best_model_report.csv
+
+prod_best_model_report:
   type: pandas.CSVDataset
   filepath: data/08_reporting/best_model_report.csv

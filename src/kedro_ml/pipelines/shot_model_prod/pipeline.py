@@ -11,8 +11,8 @@ def create_pipeline(**kargs) -> Pipeline:
     return pipeline([
         node(
             data_acquisition_node,
-            inputs=['prod'],
-            outputs=['prod_raw_train'],
+            inputs=['params:prod'],
+            outputs='prod_raw_train',
             tags=['data_acquisition']
         ),
         node(
@@ -36,29 +36,29 @@ def create_pipeline(**kargs) -> Pipeline:
         node(
             model_logistic_regression,
             inputs=['prod_train_data', 'params:session_id'],
-            outputs=['lr_model'],
+            outputs=['prod_lr_model'],
             tags=['training', 'model']
         ),
         node(
             model_decision_tree,
             inputs=['prod_train_data', 'params:session_id'],
-            outputs=['dt_model'],
+            outputs=['prod_dt_model'],
             tags=['training', 'model']
         ),
         node(
             best_model_node,
             inputs=[
                 'prod_test_data',
-                'lr_model',
-                'dt_model'
+                'prod_lr_model',
+                'prod_dt_model'
             ],
-            outputs=['best_model', 'lr_model_metrics_img', 'dt_model_metrics_img'],
-            tags=['best_model', 'model']
+            outputs=['prod_best_model', 'prod_lr_model_metrics_img', 'prod_dt_model_metrics_img'],
+            tags=['prod_best_model', 'model']
         ),
         node(
             generate_model_report,
-            inputs=['best_model', 'prod_test_data'],
-            outputs='best_model_report',
+            inputs=['prod_best_model', 'prod_test_data'],
+            outputs='prod_best_model_report',
             tags=['reporting']
         )
     ])

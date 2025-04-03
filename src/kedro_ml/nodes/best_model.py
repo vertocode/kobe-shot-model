@@ -60,10 +60,10 @@ def best_model_node(test_set: pd.DataFrame, lr_model, dt_model):
         mlflow.log_metric("log_loss_best", best_log_loss)
         mlflow.log_metric("f1_score_best", best_f1)
 
-    lr_model_metrics_img = generate_metrics("Logistic Regression Metrics", lr_log_loss, lr_f1)
-    dt_model_metrics_img = generate_metrics("Decision Tree Metrics", dt_log_loss, dt_f1)
+    lr_model_metrics= generate_metrics("Logistic Regression Metrics", lr_log_loss, lr_f1)
+    dt_model_metrics = generate_metrics("Decision Tree Metrics", dt_log_loss, dt_f1)
 
-    return best_model, lr_model_metrics_img, dt_model_metrics_img
+    return best_model, lr_model_metrics, dt_model_metrics
 
 
 # Create metrics
