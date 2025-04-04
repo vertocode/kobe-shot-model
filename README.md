@@ -5,6 +5,7 @@ Github: https://github.com/vertocode/kobe-shot-model
 ## Jump To
 
 - [Setup](/docs/SETUP.md)
+- [Evaluation Rubric](/docs/EVALUATION_RUBRIC.md)
 - [Introduction](#introduction)
 - [Project Flow Diagram](#project-flow)
 - [Project Artifacts](#project-artifacts)
@@ -13,7 +14,19 @@ Github: https://github.com/vertocode/kobe-shot-model
 - [Train-Test Split and Bias Mitigation](#train-test-split-and-bias-mitigation)
 - [Choosing Between Logistic Regression and Decision Tree Models](#choosing-between-logistic-regression-and-decision-tree-models)
 - [MLflow Run Insights and Model Retrieval](#mlflow-run-insights-and-model-retrieval)
-- [Evaluation Rubric](/docs/EVALUATION_RUBRIC.md)
+- [MLflow Metrics: Log Loss and F1 Score](#mlflow-metrics-log-loss-and-f1-score)
+- [Model Monitoring Strategy](#model-monitoring-strategy)
+- [Retraining Strategies](#retraining-strategies)
+
+## Setup
+
+You can find the documentation on how to set up this project locally in the [SETUP.md file](docs/SETUP.md).
+
+This document provides instructions on how to set up the MLflow server, run the Kedro pipeline, serve the model as an API, and launch the Streamlit app to make predictions.
+
+## Evaluation Rubric
+
+To help the instructor evaluate whether this project meets the rubric criteria, I created this document [EVALUATION_RUBRIC.MD](docs/EVALUATION_RUBRIC.md) linking each rubric item to the corresponding implementation in the project. Hopefully, this will help save you some time during the review.
 
 ## Introduction
 
@@ -26,6 +39,22 @@ In this project, we will explore two machine learning approaches:
 The project follows the **TDSP (Team Data Science Process)** framework, ensuring a structured approach to data collection, preparation, model training, evaluation, and deployment. The goal is to deliver a robust model that can predict shot outcomes and be easily deployed for future use.
 
 This README will guide you through the steps and processes involved in the project, from data ingestion to model deployment and monitoring.
+
+## Data Categorization
+
+The dataset used in this project was sourced from public NBA shot logs and includes detailed information about each of Kobe Bryant's shot attempts. After collecting the raw data, a preprocessing step was applied to categorize and structure the data in a meaningful way for modeling.
+
+The key categories (features) selected for analysis include:
+
+- `lat` and `lon`: the geographical location on the court where the shot was taken.
+- `minutes_remaining`: how many minutes were left in the current quarter.
+- `period`: the quarter or overtime period in which the shot occurred.
+- `playoffs`: whether the game was a playoff match (1) or a regular season game (0).
+- `shot_distance`: the distance of the shot from the basket.
+- `shot_made_flag`: the target variable indicating whether the shot was successful (1) or missed (0).
+
+These features were chosen for their predictive value and relevance to game context and player performance. The data was cleaned, filtered, and categorized consistently across both development and production pipelines to ensure model compatibility and accuracy.
+
 
 ## Project Flow
 
@@ -136,6 +165,7 @@ Each execution of the pipeline automatically logs relevant model metrics and art
 
 In every run, the following details are recorded:
 - Model parameters and configuration
+- A dedicated run for the **"Data Preparation"** stage, where the dataset was cleaned, filtered, and transformed before modeling. This run includes metadata, preprocessing parameters, and relevant logs.
 - Evaluation metrics: **Accuracy**, **F1 Score**, **Log Loss**, **Precision**, **Recall**
 - Visual metric summaries for both models (Decision Tree and Logistic Regression)
 - Registered models and their versions under the MLflow **Model Registry**
@@ -147,3 +177,55 @@ Below is an example of how metrics are displayed in the MLflow UI for each pipel
 ![metrics-ml.png](docs/images/ml-metrics.png)
 
 This integration ensures reproducibility, version control, and transparency throughout the model development lifecycle.
+
+
+## MLflow Metrics: Log Loss and F1 Score
+
+During model training and evaluation, key metrics such as **Log Loss** and **F1 Score** were calculated and logged using MLflow for both the regression and decision tree models.
+
+- For the **Logistic Regression model**, the **Log Loss** metric was calculated to evaluate the model's prediction confidence and was recorded in MLflow during the model evaluation phase.
+
+- For the **Decision Tree model**, both **Log Loss** and **F1 Score** were calculated and logged in MLflow. These metrics provided a comprehensive view of the model's classification performance and ability to distinguish between shot successes and misses.
+
+These metrics can be reviewed in the MLflow UI under the experiment runs, where each model's performance is tracked and visualized for easy comparison and selection of the best-performing model.
+
+## Model Monitoring Strategy
+
+To ensure the ongoing performance of the deployed model, a monitoring strategy was defined for both scenarios — when the target variable (`shot_made_flag`) is available and when it is not.
+
+#### With Target Variable
+When the actual outcome of a shot is known (i.e., the `shot_made_flag` is available), we can monitor the model’s performance using traditional supervised metrics such as:
+- **Accuracy**
+- **F1 Score**
+- **Precision & Recall**
+- **Log Loss**
+
+These metrics can be continuously logged and compared over time to detect model degradation.
+
+#### Without Target Variable
+When the target is not available (for example, during live predictions before ground truth is known), we apply unsupervised monitoring strategies:
+- **Prediction Distribution Shift**: Track the distribution of predicted probabilities over time to identify unusual patterns.
+- **Input Feature Drift**: Compare the statistical properties of incoming feature data against the training dataset to detect covariate shift.
+- **Confidence Scores**: Monitor confidence levels of the predictions — a sudden drop might indicate model uncertainty.
+
+These techniques help ensure the model remains reliable in real-world usage and provide early warnings for necessary retraining or review.
+
+## Retraining Strategies
+
+To keep the model up to date and performing well over time, two retraining strategies have been defined:
+
+#### Reactive Retraining
+This strategy is triggered by performance degradation or anomalies in monitored metrics. For example:
+- A drop in F1 Score or accuracy.
+- A significant shift in the distribution of prediction probabilities.
+- Model performance alerts from MLflow or custom monitoring dashboards.
+
+When triggered, the pipeline is re-executed using recent data to retrain and redeploy the model automatically or with human approval.
+
+#### Predictive Retraining
+This is a scheduled strategy based on expected data drift or model aging. Examples include:
+- Time-based retraining (e.g., weekly or monthly).
+- Volume-based retraining (e.g., every 1000 new data points).
+- Periodic evaluation using validation sets, even if no performance issues are observed.
+
+Both strategies are supported by the modular nature of the Kedro pipeline, allowing for easy integration of retraining steps and redeployment.
