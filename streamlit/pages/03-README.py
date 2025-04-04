@@ -1,3 +1,6 @@
+import streamlit as st
+
+st.markdown('''
 # Kobe Shot Model
 
 Github: https://github.com/vertocode/kobe-shot-model
@@ -147,3 +150,4 @@ Below is an example of how metrics are displayed in the MLflow UI for each pipel
 ![metrics-ml.png](docs/images/ml-metrics.png)
 
 This integration ensures reproducibility, version control, and transparency throughout the model development lifecycle.
+''')

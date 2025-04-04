@@ -1,3 +1,6 @@
+import streamlit as st
+
+st.markdown('''
 ## Setup
 
 1. Clone this repository
@@ -83,3 +86,5 @@ At this point, you have the trained model, the MLflow dashboard up and running, 
 
 ![streamlit.png](images/streamlit-default.png)
 
+
+''')

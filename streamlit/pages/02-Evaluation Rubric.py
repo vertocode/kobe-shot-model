@@ -1,3 +1,6 @@
+import streamlit as st
+
+st.markdown('''
 # Final Project Evaluation Rubric
 
 Each criterion should be marked as:
@@ -54,3 +57,5 @@ Each criterion should be marked as:
 | Did the student describe how to monitor model health with and without the availability of the target variable?                    |        |
 | Did the student implement a monitoring dashboard for the operation using Streamlit?                                                |  ✅ - We can observe the result in the [README.md ](../README.md) file          |
 | Did the student describe reactive and predictive retraining strategies for the production model?                                  |        |
+
+''')
