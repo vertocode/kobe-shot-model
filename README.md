@@ -13,6 +13,7 @@ Github: https://github.com/vertocode/kobe-shot-model
 - [Train-Test Split and Bias Mitigation](#train-test-split-and-bias-mitigation)
 - [Choosing Between Logistic Regression and Decision Tree Models](#choosing-between-logistic-regression-and-decision-tree-models)
 - [MLflow Run Insights and Model Retrieval](#mlflow-run-insights-and-model-retrieval)
+- [EVALUATION_RUBRIC](/docs/EVALUATION_RUBRIC.md)
 
 ## Introduction
 

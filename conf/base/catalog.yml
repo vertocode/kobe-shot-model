@@ -88,27 +88,11 @@ dev_best_model:
   save_args:
     registered_model_name: best_model
 
-dev_lr_model_metrics_img:
-  type: text.TextDataset
-  filepath: data/07_model_outputs/lr_model_metrics.txt
-
-dev_dt_model_metrics_img:
-  type: text.TextDataset
-  filepath: data/07_model_outputs/dt_model_metrics.txt
-
 prod_best_model:
   type: kedro_mlflow.io.models.MlflowModelTrackingDataset
   flavor: mlflow.sklearn
   save_args:
     registered_model_name: best_model
-
-prod_lr_model_metrics_img:
-  type: text.TextDataset
-  filepath: data/07_model_outputs/lr_model_metrics.txt
-
-prod_dt_model_metrics_img:
-  type: text.TextDataset
-  filepath: data/07_model_outputs/dt_model_metrics.txt
 
 # 08_reporting
 
@@ -119,3 +103,19 @@ dev_best_model_report:
 prod_best_model_report:
   type: pandas.CSVDataset
   filepath: data/08_reporting/best_model_report.csv
+
+dev_lr_model_metrics_img:
+  type: text.TextDataset
+  filepath: data/08_reporting/lr_model_metrics.txt
+
+dev_dt_model_metrics_img:
+  type: text.TextDataset
+  filepath: data/08_reporting/dt_model_metrics.txt
+
+prod_lr_model_metrics_img:
+  type: text.TextDataset
+  filepath: data/08_reporting/lr_model_metrics.txt
+
+prod_dt_model_metrics_img:
+  type: text.TextDataset
+  filepath: data/08_reporting/dt_model_metrics.txt
