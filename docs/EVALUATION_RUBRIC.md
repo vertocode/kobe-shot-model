@@ -51,6 +51,6 @@ Each criterion should be marked as:
 | Criterion                                                                                                                          | Status |
 |-------------------------------------------------------------------------------------------------------------------------------------|--------|
 | Did the student identify differences between the development and production datasets?                                              |  ✅ - We can observe the result in the [README.md ](../README.md) file          |
-| Did the student describe how to monitor model health with and without the availability of the target variable?                    |        |
+| Did the student describe how to monitor model health with and without the availability of the target variable?                    | ✅ - We can observe the result in the [README.md ](../README.md) file        |
 | Did the student implement a monitoring dashboard for the operation using Streamlit?                                                |  ✅ - We can observe the result in the [README.md ](../README.md) file          |
-| Did the student describe reactive and predictive retraining strategies for the production model?                                  |        |
+| Did the student describe reactive and predictive retraining strategies for the production model?                                  |   ✅ - We can observe the result in the [README.md ](../README.md) file      |
