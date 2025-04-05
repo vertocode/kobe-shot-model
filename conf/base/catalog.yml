@@ -60,25 +60,25 @@ dev_lr_model:
  type: kedro_mlflow.io.models.MlflowModelTrackingDataset
  flavor: mlflow.sklearn
  save_args:
-   registered_model_name: lr_model
+   registered_model_name: lr_model_dev
 
 dev_dt_model:
  type: kedro_mlflow.io.models.MlflowModelTrackingDataset
  flavor: mlflow.sklearn
  save_args:
-   registered_model_name: dt_model
+   registered_model_name: dt_model_dev
 
 prod_lr_model:
  type: kedro_mlflow.io.models.MlflowModelTrackingDataset
  flavor: mlflow.sklearn
  save_args:
-   registered_model_name: lr_model
+   registered_model_name: lr_model_prod
 
 prod_dt_model:
  type: kedro_mlflow.io.models.MlflowModelTrackingDataset
  flavor: mlflow.sklearn
  save_args:
-   registered_model_name: dt_model
+   registered_model_name: dt_model_prod
 
 # 07_model_output
 
@@ -86,36 +86,36 @@ dev_best_model:
   type: kedro_mlflow.io.models.MlflowModelTrackingDataset
   flavor: mlflow.sklearn
   save_args:
-    registered_model_name: best_model
+    registered_model_name: dev_best_model
 
 prod_best_model:
   type: kedro_mlflow.io.models.MlflowModelTrackingDataset
   flavor: mlflow.sklearn
   save_args:
-    registered_model_name: best_model
+    registered_model_name: prod_best_model
 
 # 08_reporting
 
 dev_best_model_report:
   type: pandas.CSVDataset
-  filepath: data/08_reporting/best_model_report.csv
+  filepath: data/08_reporting/best_model_report_dev.csv
 
 prod_best_model_report:
   type: pandas.CSVDataset
-  filepath: data/08_reporting/best_model_report.csv
+  filepath: data/08_reporting/best_model_report_prod.csv
 
 dev_lr_model_metrics_img:
   type: text.TextDataset
-  filepath: data/08_reporting/lr_model_metrics.txt
+  filepath: data/08_reporting/lr_model_metrics_dev.txt
 
 dev_dt_model_metrics_img:
   type: text.TextDataset
-  filepath: data/08_reporting/dt_model_metrics.txt
+  filepath: data/08_reporting/dt_model_metrics_dev.txt
 
 prod_lr_model_metrics_img:
   type: text.TextDataset
-  filepath: data/08_reporting/lr_model_metrics.txt
+  filepath: data/08_reporting/lr_model_metric_prod.txt
 
 prod_dt_model_metrics_img:
   type: text.TextDataset
-  filepath: data/08_reporting/dt_model_metrics.txt
+  filepath: data/08_reporting/dt_model_metrics_prod.txt

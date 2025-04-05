@@ -1,0 +1,4 @@
+Logistic Regression Metrics
+
+Log Loss: 11.8814
+F1 Score: 0.0000

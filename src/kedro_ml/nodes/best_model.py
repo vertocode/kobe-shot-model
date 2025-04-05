@@ -5,7 +5,7 @@ import mlflow
 
 target_column = 'shot_made_flag'
 
-def best_model_node(test_set: pd.DataFrame, lr_model, dt_model):
+def best_model_node(test_set: pd.DataFrame, lr_model, dt_model, run_type):
     """
     Compares two classification models (logistic regression and decision tree) on a test set
     using log loss and F1-score, and returns the best model based on log loss.
@@ -53,12 +53,12 @@ def best_model_node(test_set: pd.DataFrame, lr_model, dt_model):
 
     active_run = mlflow.active_run()
     if active_run is not None:
-        mlflow.log_metric("log_loss_lr", lr_log_loss)
-        mlflow.log_metric("f1_score_lr", lr_f1)
-        mlflow.log_metric("log_loss_dt", dt_log_loss)
-        mlflow.log_metric("f1_score_dt", dt_f1)
-        mlflow.log_metric("log_loss_best", best_log_loss)
-        mlflow.log_metric("f1_score_best", best_f1)
+        mlflow.log_metric(f"{run_type}_log_loss_lr", lr_log_loss)
+        mlflow.log_metric(f"{run_type}_f1_score_lr", lr_f1)
+        mlflow.log_metric(f"{run_type}_log_loss_dt", dt_log_loss)
+        mlflow.log_metric(f"{run_type}_f1_score_dt", dt_f1)
+        mlflow.log_metric(f"{run_type}_log_loss_best", best_log_loss)
+        mlflow.log_metric(f"{run_type}_f1_score_best", best_f1)
 
     lr_model_metrics= generate_metrics("Logistic Regression Metrics", lr_log_loss, lr_f1)
     dt_model_metrics = generate_metrics("Decision Tree Metrics", dt_log_loss, dt_f1)

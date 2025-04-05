@@ -50,7 +50,8 @@ def create_pipeline(**kargs) -> Pipeline:
             inputs=[
                 'prod_test_data',
                 'prod_lr_model',
-                'prod_dt_model'
+                'prod_dt_model',
+                'params:prod'
             ],
             outputs=['prod_best_model', 'prod_lr_model_metrics_img', 'prod_dt_model_metrics_img'],
             tags=['prod_best_model', 'model']

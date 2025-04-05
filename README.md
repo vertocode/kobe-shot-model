@@ -15,8 +15,11 @@ Github: https://github.com/vertocode/kobe-shot-model
 - [Choosing Between Logistic Regression and Decision Tree Models](#choosing-between-logistic-regression-and-decision-tree-models)
 - [MLflow Run Insights and Model Retrieval](#mlflow-run-insights-and-model-retrieval)
 - [MLflow Metrics: Log Loss and F1 Score](#mlflow-metrics-log-loss-and-f1-score)
+- [Comparing MLflow Metrics Between Dev and Prod Datasets](#comparing-mlflow-metrics-between-dev-and-prod-datasets)
+- [Comparing Final Metrics Between Dev and Prod Datasets](#comparing-final-metrics-between-dev-and-prod-datasets)
 - [Model Monitoring Strategy](#model-monitoring-strategy)
 - [Retraining Strategies](#retraining-strategies)
+- [Interactive Model Testing with Streamlit](#interactive-model-testing-with-streamlit)
 
 ## Setup
 
@@ -58,35 +61,50 @@ These features were chosen for their predictive value and relevance to game cont
 
 ## Project Flow
 
-Below is the diagram that outlines the steps and processes involved in the **Kobe Shot Model** project, from data ingestion to model deployment and monitoring.
+Below is the diagram that outlines the steps and processes involved in the **Kobe Shot Model** project. You can download this diagram as excalidraw file to best view [clicking here](docs/project_flow.excalidraw).
 
 ![Project Flow](docs/images/project_flow.png)
 
 ## Project Artifacts
-
-Throughout the execution of the **Kobe Shot Model** pipeline, several artifacts are created and stored at different stages. Below is a description of each artifact as defined in the `catalog.yml`.
+Throughout the execution of the **Kobe Shot Model** pipeline, several artifacts are created and stored at different stages. Below is a list of each artifact file along with a short description of its purpose.
 
 #### 01_raw
-- **dev_raw_train** and **prod_raw_train**: Raw datasets in `.parquet` format containing the original inputs for training and validation.
+- `dataset_kobe_dev.parquet`: Raw development dataset used as input for the dev pipeline.
+- `dataset_kobe_prod.parquet`: Raw production dataset used for testing and deployment scenarios.
 
 #### 02_intermediate
-- **prepared_dev_raw_train** and **prepared_prod_raw_train**: Cleaned and preprocessed datasets after initial preparation steps such as filtering and missing value handling.
+- `dataset_kobe_dev.parquet`: Preprocessed dev dataset after initial cleaning and filtering.
+- `dataset_kobe_prod.parquet`: Preprocessed prod dataset after initial cleaning and filtering.
+
+#### 03_primary
+- *(No artifacts stored at this stage.)*
 
 #### 04_feature
-- **selected_features_dev_raw_train** and **selected_features_prod_raw_train**: Datasets with selected features after feature engineering, ready to be split for training and testing.
+- `dataset_kobe_dev.parquet`: Feature-engineered dev dataset ready for model input.
+- `dataset_kobe_prod.parquet`: Feature-engineered prod dataset ready for model input.
 
 #### 05_model_input
-- **dev_train_data**, **prod_train_data**, **dev_test_data**, **prod_test_data**: Train/test splits prepared for both development and production pipelines.
+- `train_dataset_kobe_dev.parquet`: Training split of the dev dataset.
+- `test_dataset_kobe_dev.parquet`: Testing split of the dev dataset.
+- `train_dataset_kobe_prod.parquet`: Training split of the prod dataset.
+- `test_dataset_kobe_prod.parquet`: Testing split of the prod dataset.
 
 #### 06_models
-- **lr_model** and **dt_model**: Trained logistic regression and decision tree models, stored and versioned using MLflow.
+- *(No models currently stored in this directory. Models are tracked via MLflow.)*
 
-#### 07_model_output
-- **best_model**: The selected model based on evaluation metrics.
-- **lr_model_metrics_img** and **dt_model_metrics_img**: Visual evaluation reports (HTML with embedded base64 PNG images) of both models.
+#### 07_model_outputs
+- *(No outputs currently stored in this directory. Visualizations and evaluations are tracked via MLflow.)*
 
 #### 08_reporting
-- **best_model_report**: CSV file containing classification metrics (Accuracy, F1 Score, Log Loss, Precision, Recall) for the best model selected.
+ - `best_model_report.csv`: General report with classification metrics for the best model.
+ - `best_model_report_dev.csv`: Evaluation report for the best model on the development dataset.
+ - `best_model_report_prod.csv`: Evaluation report for the best model on the production dataset.
+ - `dt_model_metrics.txt`: Text-based evaluation summary for Decision Tree (general).
+ - `dt_model_metrics_dev.txt`: Decision Tree metrics on the development dataset.
+ - `dt_model_metrics_prod.txt`: Decision Tree metrics on the production dataset.
+ - `lr_model_metrics.txt`: Text-based evaluation summary for Logistic Regression (general).
+ - `lr_model_metrics_dev.txt`: Logistic Regression metrics on the development dataset.
+ - `lr_model_metric_prod.txt`: Logistic Regression metrics on the production dataset.
 
 All artifacts are stored under the `/data` directory, organized by pipeline stage to ensure traceability and reproducibility.
 
@@ -189,6 +207,31 @@ During model training and evaluation, key metrics such as **Log Loss** and **F1 
 
 These metrics can be reviewed in the MLflow UI under the experiment runs, where each model's performance is tracked and visualized for easy comparison and selection of the best-performing model.
 
+![img.png](docs/images/mlflow-metrics.png)
+
+### Comparing MLflow Metrics Between Dev and Prod Datasets
+
+As shown in the screenshot above, applying the same model to the development and production datasets resulted in significantly different outcomes.
+
+On the development dataset, the model performed notably better — the logistic regression achieved an F1 score of approximately 0.63. However, on the production dataset, this same metric dropped to nearly 0, indicating poor generalization.
+
+A similar pattern is observed with the Log Loss metric: for the logistic regression model, the dev dataset yielded a value around 17, while the production dataset resulted in a lower value of approximately 11. While a lower log loss might seem better, in this case it reflects the model’s overconfidence in incorrect predictions on unseen data.
+
+Additionally, the Decision Tree model exhibited higher bias on the production dataset, as can also be seen in the screenshot. This performance gap highlights the importance of monitoring data drift and ensuring that the training data is representative of real-world conditions.
+
+## Comparing Final Metrics Between Dev and Prod Datasets
+
+By analyzing the evaluation metrics of the best-performing model — trained using the same algorithm but applied to different datasets — we can observe a significant performance discrepancy. The results are available in the files [best_model_report_dev.csv](data/08_reporting/best_model_report_dev.csv) and [best_model_report_prod.csv](data/08_reporting/best_model_report_prod.csv).
+
+| Dataset | Accuracy | F1 Score | Log Loss | Precision | Recall |
+|---------|----------|----------|----------|-----------|--------|
+| **dev** | 0.5102   | 0.6370   | 17.6531  | 0.4929    | 0.8998 |
+| **prod**| 0.6704   | 0.0000   | 11.8814  | 0.0000    | 0.0000 |
+
+### Conclusion
+
+Although the model achieved higher accuracy and lower log loss on the production dataset, key classification metrics such as **F1 Score**, **Precision**, and **Recall** dropped to **zero**, indicating that the model failed to correctly identify any positive cases. This sharp contrast suggests a severe mismatch between the development and production data distributions, highlighting the need for further data analysis, retraining, or adjustments to better generalize the model across environments.
+
 ## Model Monitoring Strategy
 
 To ensure the ongoing performance of the deployed model, a monitoring strategy was defined for both scenarios — when the target variable (`shot_made_flag`) is available and when it is not.
@@ -229,3 +272,16 @@ This is a scheduled strategy based on expected data drift or model aging. Exampl
 - Periodic evaluation using validation sets, even if no performance issues are observed.
 
 Both strategies are supported by the modular nature of the Kedro pipeline, allowing for easy integration of retraining steps and redeployment.
+
+## Interactive Model Testing with Streamlit
+
+This project includes a Streamlit app that provides an interactive interface to test the model in real time. Through a simple form, users can input shot features such as latitude, longitude, period, minutes remaining, and shot distance, and receive an immediate prediction indicating whether Kobe would likely make the shot.
+
+This interface is especially useful for exploring the model's behavior without needing to write code or manually query the API.
+
+To set up and run the Streamlit interface locally, follow the instructions provided in the [SETUP.md](docs/SETUP.md) file located in the `docs` folder.
+
+Kobe made the shot | Kobe missed the shot
+-- | --
+![img.png](docs/images/kobe-made-the-shot.png) | ![img.png](docs/images/kobe-missed-the-shot.png)
+
